@@ -1,4 +1,78 @@
 <main class="page-container genai-page">
+  <!-- Python Environment Setup Section -->
+  <section class="setup-section" aria-label="Python Environment Setup">
+    <div class="setup-header">
+      <div class="setup-header-content">
+        <div class="setup-title-wrapper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="setup-title-icon" aria-hidden="true">
+            <polyline points="4 17 10 11 4 5"></polyline>
+            <line x1="12" y1="19" x2="20" y2="19"></line>
+          </svg>
+          <h2 class="setup-title">Python Environment Setup</h2>
+        </div>
+        <p class="setup-subtitle">Run these terminal commands in order to configure required packages and launch JupyterLab</p>
+      </div>
+
+      <!-- Prominent Global Copy All Commands Button -->
+      <button type="button" 
+              class="btn-copy-all-commands"
+              [ngClass]="copyAllCommandsStatus"
+              (click)="copyAllCommands()"
+              aria-label="Copy All Commands">
+        <svg *ngIf="copyAllCommandsStatus === 'idle'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon">
+          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+          <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+        </svg>
+        <svg *ngIf="copyAllCommandsStatus === 'copying'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon spinner">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 2a10 10 0 0 1 10 10"></path>
+        </svg>
+        <svg *ngIf="copyAllCommandsStatus === 'copied'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="btn-icon">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span class="btn-text">
+          <ng-container [ngSwitch]="copyAllCommandsStatus">
+            <span *ngSwitchCase="'copying'">Copying...</span>
+            <span *ngSwitchCase="'copied'">All commands copied!</span>
+            <span *ngSwitchCase="'error'">Copy Failed</span>
+            <span *ngSwitchDefault>Copy All Commands</span>
+          </ng-container>
+        </span>
+      </button>
+    </div>
+
+    <!-- 4 Command Blocks -->
+    <div class="setup-commands-grid">
+      <div *ngFor="let cmd of setupCommands; let i = index" class="setup-command-card">
+        <!-- Topbar with Command Label & Individual Copy Button -->
+        <div class="cmd-topbar">
+          <span class="cmd-label">{{ cmd.label }}</span>
+          <button type="button" 
+                  class="cmd-copy-btn" 
+                  [ngClass]="cmd.copyStatus"
+                  (click)="copySingleCommand(cmd)"
+                  [title]="'Copy ' + cmd.label"
+                  [attr.aria-label]="'Copy ' + cmd.label">
+            <svg *ngIf="cmd.copyStatus === 'idle'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cmd-copy-icon">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <svg *ngIf="cmd.copyStatus === 'copied'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="cmd-copy-icon check-icon">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>{{ cmd.copyStatus === 'copied' ? 'Copied!' : 'Copy' }}</span>
+          </button>
+        </div>
+
+        <!-- Code Block Content -->
+        <div class="cmd-code-area">
+          <span class="cmd-prompt" aria-hidden="true">$</span>
+          <pre class="cmd-pre"><code>{{ cmd.command }}</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Page Header -->
   <header class="page-header">
     <div class="header-inner">

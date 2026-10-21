@@ -7,6 +7,13 @@ import { ProgramCardComponent } from '../../components/program-card/program-card
 import { ClipboardService } from '../../services/clipboard.service';
 import { ToastService } from '../../services/toast.service';
 
+export interface SetupCommand {
+  id: number;
+  label: string;
+  command: string;
+  copyStatus: 'idle' | 'copied' | 'error';
+}
+
 @Component({
   selector: 'app-genai-page',
   standalone: true,
@@ -15,6 +22,38 @@ import { ToastService } from '../../services/toast.service';
   styleUrl: './genai-page.component.css'
 })
 export class GenaiPageComponent implements OnInit {
+  // Python Environment Setup Commands (exact 4 commands)
+  readonly setupCommands: SetupCommand[] = [
+    {
+      id: 1,
+      label: 'Command 1',
+      command: 'py -m pip install transformers==4.57.1',
+      copyStatus: 'idle'
+    },
+    {
+      id: 2,
+      label: 'Command 2',
+      command: 'py -m pip install torch sentencepiece',
+      copyStatus: 'idle'
+    },
+    {
+      id: 3,
+      label: 'Command 3',
+      command: 'py -m pip install jupyterlab',
+      copyStatus: 'idle'
+    },
+    {
+      id: 4,
+      label: 'Command 4',
+      command: 'py -m jupyter lab',
+      copyStatus: 'idle'
+    }
+  ];
+
+  // Setup Commands Copy All state
+  copyAllCommandsStatus: 'idle' | 'copying' | 'copied' | 'error' = 'idle';
+  private copyAllCommandsTimeout: any;
+
   // Underlying complete dataset (exact 27 programs from PDF)
   readonly allPrograms: ProgramItem[] = GENAI_PROGRAMS;
 
@@ -34,6 +73,52 @@ export class GenaiPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.totalPrograms = this.allPrograms.length;
+  }
+
+  /**
+   * Copies an individual setup command to the clipboard
+   */
+  async copySingleCommand(cmd: SetupCommand): Promise<void> {
+    const success = await this.clipboardService.copyText(cmd.command);
+
+    if (success) {
+      cmd.copyStatus = 'copied';
+      this.toastService.show('Copied!', 'success', 2000);
+      setTimeout(() => {
+        cmd.copyStatus = 'idle';
+      }, 2000);
+    } else {
+      cmd.copyStatus = 'error';
+      this.toastService.show('Failed to copy command.', 'error', 3000);
+      setTimeout(() => {
+        cmd.copyStatus = 'idle';
+      }, 3000);
+    }
+  }
+
+  /**
+   * Copies all four setup commands into the clipboard, in original order, one command per line
+   */
+  async copyAllCommands(): Promise<void> {
+    clearTimeout(this.copyAllCommandsTimeout);
+    this.copyAllCommandsStatus = 'copying';
+
+    const textToCopy = this.setupCommands.map(c => c.command).join('\n');
+    const success = await this.clipboardService.copyText(textToCopy);
+
+    if (success) {
+      this.copyAllCommandsStatus = 'copied';
+      this.toastService.show('All commands copied!', 'success', 2500);
+      this.copyAllCommandsTimeout = setTimeout(() => {
+        this.copyAllCommandsStatus = 'idle';
+      }, 2500);
+    } else {
+      this.copyAllCommandsStatus = 'error';
+      this.toastService.show('Failed to copy setup commands.', 'error', 3000);
+      this.copyAllCommandsTimeout = setTimeout(() => {
+        this.copyAllCommandsStatus = 'idle';
+      }, 3000);
+    }
   }
 
   get filteredPrograms(): ProgramItem[] {
