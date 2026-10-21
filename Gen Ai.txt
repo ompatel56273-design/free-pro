@@ -1,0 +1,294 @@
+Program 1: Write a Python program to sort the words of a given string in alphabetical order.
+
+text = "banana apple mango orange" 
+words = text.split() 
+words.sort() 
+print(words) 
+print(" ".join(words))
+
+================================================================================
+
+Program 2: Write a Python program to search for a specified word in a given string.
+
+text = "Python is easy to learn" 
+word = "easy" 
+if word in text: 
+    print("Found") 
+else: 
+    print("Not Found")
+
+================================================================================
+
+Program 3: Write a Python program to format and display variables within a string using string formatting techniques.
+
+name = "Nehal" 
+age = 51 
+print(f"My name is {name} and I am {age} years old.") 
+print("My name is {} and I am {} years old.".format(name, age))
+
+================================================================================
+
+Program 4: Write a Python program to find a specified word in a string and replace it with another word.
+
+text = "I like Java." 
+new_text = text.replace("Java", "Python") 
+print(new_text)
+
+================================================================================
+
+Program 5: Write a Python program to remove all occurrences of a specified word from a given string.
+
+text = "Python is very very easy" 
+words = text.split() 
+filtered = [word for word in words if word != "very"] 
+print(" ".join(filtered))
+
+================================================================================
+
+Program 6: Write a Python program to count the total number of words in a given string.
+
+text = "Python is easy to learn" 
+count = len(text.split()) 
+print(count)
+
+================================================================================
+
+Program 7: Write a Python program to remove all punctuation characters from a given string.
+
+import string 
+text = "Hello, World! Welcome." 
+result = text.translate(str.maketrans('', '', string.punctuation)) 
+print(result)
+
+================================================================================
+
+Program 8: Write a Python program to split a given string into tokens using a specified delimiter.
+
+text = "Apple,Banana,Mango,Orange" 
+tokens = text.split(",") 
+print(tokens)
+
+================================================================================
+
+Program 9: Write a Python program to convert a given string into uppercase, lowercase, title case, capitalize case, and swap case.
+
+text = "Python Programming" 
+print(text.upper()) 
+print(text.lower()) 
+print(text.title()) 
+print(text.capitalize()) 
+print(text.swapcase())
+
+================================================================================
+
+Program 10: Write a Python program to split a string into individual words and then join them using a specified separator.
+
+text = "Python is easy" 
+words = text.split() 
+print(words) 
+joined = "-".join(words) 
+print(joined)
+
+================================================================================
+
+Program 11: Write a Python program to summarize a given English paragraph into a concise summary using a pre-trained model.
+
+# pip install transformers torch sentencepiece 
+from transformers import pipeline 
+ 
+summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6") 
+text = "Your long text here..." 
+result = summarizer(text, max_length=60, min_length=20, do_sample=False) 
+print(result[0]["summary_text"])
+
+================================================================================
+
+Program 12: Write a Python program to translate a given English sentence into Hindi using a pre-trained model.
+
+# pip install transformers torch sentencepiece 
+from transformers import pipeline 
+ 
+translator = pipeline("translation", model="Helsinki-NLP/opus-mt-en-fr") 
+text = "Artificial Intelligence is changing the world." 
+result = translator(text) 
+print(result[0]["translation_text"])
+
+================================================================================
+
+Program 13: Write a Python program to paraphrase a given paragraph while preserving its original meaning using a pre-trained model.
+
+# pip install transformers torch sentencepiece 
+from transformers import pipeline 
+ 
+paraphraser = pipeline("text2text-generation", 
+model="humarin/chatgpt_paraphraser_on_T5_base") 
+text = "Python is an easy programming language." 
+result = paraphraser(text) 
+print(result[0]["generated_text"])
+
+================================================================================
+
+Program 14: Write a Python program to simplify a complex paragraph into easy-to-understand English using a pre-trained model.
+
+# pip install transformers torch sentencepiece 
+from transformers import pipeline 
+ 
+simplifier = pipeline("text2text-generation", model="t5-small") 
+text = "simplify: The physician administered medication." 
+result = simplifier(text) 
+print(result[0]["generated_text"])
+
+================================================================================
+
+Program 15: Write a Python program to identify and correct grammatical errors in a given English paragraph using a pre-trained model.
+
+# pip install transformers torch sentencepiece 
+from transformers import pipeline 
+ 
+corrector = pipeline("text2text-generation", model="vennify/t5-base-grammar-correction") 
+text = "grammar: He go to school yesterday." 
+result = corrector(text) 
+print(result[0]["generated_text"])
+
+================================================================================
+
+Program 16: Write a Python program to expand a short paragraph into a more detailed paragraph using a pre-trained model.
+
+# pip install transformers torch sentencepiece 
+from transformers import pipeline 
+ 
+generator = pipeline("text2text-generation", model="google/flan-t5-base") 
+text = "Expand: AI helps doctors." 
+result = generator(text) 
+print(result[0]["generated_text"])
+
+================================================================================
+
+Program 17: Write a Python program to generate a short paragraph on a given topic using a pre-trained language model.
+
+# pip install transformers torch 
+from transformers import pipeline 
+ 
+generator = pipeline("text-generation", model="gpt2") 
+result = generator("Artificial Intelligence", max_length=80) 
+print(result[0]["generated_text"])
+
+================================================================================
+
+Program 18: Write a Python program to complete an incomplete English sentence based on the given text using a pre-trained model.
+
+# pip install transformers torch 
+from transformers import pipeline 
+ 
+generator = pipeline("text-generation", model="gpt2") 
+result = generator("Python is", max_length=50) 
+print(result[0]["generated_text"])
+
+================================================================================
+
+Program 19: Write a Python program to answer questions based on a given English passage using a pre-trained question-answering model.
+
+# pip install transformers torch 
+from transformers import pipeline 
+ 
+qa = pipeline("question-answering") 
+result = qa( 
+    question="What is the capital of France?", 
+    context="Paris is the capital of France." 
+) 
+print(result["answer"])
+
+================================================================================
+
+Program 20: Write a Python program to classify the sentiment of a given English movie review as Positive, Negative, or Neutral using a pre-trained model.
+
+# pip install transformers torch 
+from transformers import pipeline 
+ 
+classifier = pipeline("sentiment-analysis") 
+result = classifier("I love Python.") 
+print(result)
+
+================================================================================
+
+Program 21: Write a Python program to classify a given news article into one of the categories: Sports, Business, Technology, or Politics using a pre-trained model.
+
+# pip install transformers torch 
+from transformers import pipeline 
+ 
+classifier = pipeline("text-classification", model="distilbert-base-uncased-finetuned-sst-2-english") 
+result = classifier("This product is excellent.") 
+print(result)
+
+================================================================================
+
+Program 22: Write a Python program to identify and extract the names of persons, organizations, locations, and dates from a given English paragraph using a pre-trained model.
+
+# pip install transformers torch 
+from transformers import pipeline 
+ 
+ner = pipeline("ner", grouped_entities=True) 
+result = ner("Elon Musk founded SpaceX in the United States.") 
+print(result)
+
+================================================================================
+
+Program 23: Write a Python program to extract the five most important keywords from a given English document using a pre-trained model.
+
+# pip install keybert sentence-transformers 
+from keybert import KeyBERT 
+ 
+kw_model = KeyBERT() 
+text = "Artificial Intelligence and Machine Learning are transforming healthcare." 
+keywords = kw_model.extract_keywords(text) 
+print(keywords)
+
+================================================================================
+
+Program 24: Write a Python program to rewrite a given English paragraph in a formal writing style using a pre-trained model.
+
+# pip install transformers torch sentencepiece 
+from transformers import pipeline 
+ 
+rewriter = pipeline("text2text-generation", model="google/flan-t5-base") 
+text = "Rewrite formally: Send me the report." 
+result = rewriter(text) 
+print(result[0]["generated_text"])
+
+================================================================================
+
+Program 25: Write a Python program to identify the primary topic of a given English document from the categories: Education, Health, Technology, Business, or Sports using a pre-trained model.
+
+# pip install transformers torch 
+from transformers import pipeline 
+ 
+classifier = pipeline("zero-shot-classification") 
+result = classifier( 
+    "Python is widely used in Artificial Intelligence.", 
+    candidate_labels=["Technology", "Sports", "Politics", "Health"] 
+) 
+print(result)
+
+================================================================================
+
+Program 26: Write a Python program to classify a given email message as Spam or Not Spam using a pre-trained model.
+
+# pip install transformers torch 
+from transformers import pipeline 
+ 
+classifier = pipeline("text-classification", model="mrm8488/bert-tiny-finetuned-sms-spam-detection") 
+result = classifier("Congratulations! You have won a free iPhone.") 
+print(result)
+
+================================================================================
+
+Program 27: Write a Python program to detect the language of a given text from English, Hindi, Gujarati, French, German, or Spanish using a pre-trained model.
+
+# pip install transformers torch sentencepiece 
+from transformers import pipeline 
+ 
+detector = pipeline("text-classification", model="papluca/xlm-roberta-base-language-detection") 
+result = detector("Bonjour tout le monde") 
+print(result)
+
+================================================================================

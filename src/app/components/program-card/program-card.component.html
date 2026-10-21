@@ -1,0 +1,17 @@
+<article class="program-card" [id]="'program-' + program.id">
+  <!-- 1. Program Number and Definition -->
+  <h2 class="program-header">
+    <span class="program-num-label">Program {{ program.number }}:</span>
+    <span class="program-definition-text">{{ program.definition }}</span>
+  </h2>
+
+  <!-- 2. Program Code & 3. Copy Code Button (inside app-code-block) -->
+  <div class="code-blocks-list">
+    <div *ngFor="let file of program.files" class="file-code-item">
+      <app-code-block [code]="file.code" 
+                      [language]="file.language"
+                      [filename]="isMultiFile ? file.filename : ''">
+      </app-code-block>
+    </div>
+  </div>
+</article>

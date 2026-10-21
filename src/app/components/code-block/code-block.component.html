@@ -1,0 +1,31 @@
+<div class="code-box">
+  <!-- Minimal Top Bar: Optional filename on left (for multi-file only), Copy Code button on right -->
+  <div class="code-topbar">
+    <span class="file-label" *ngIf="filename">{{ filename }}</span>
+    <span class="spacer" *ngIf="!filename"></span>
+
+    <button type="button" 
+            class="copy-code-btn" 
+            [ngClass]="copyStatus"
+            (click)="copyCode()" 
+            [title]="filename ? 'Copy ' + filename : 'Copy Code'"
+            aria-label="Copy Code">
+      <svg *ngIf="copyStatus === 'idle'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="copy-icon">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>
+      <svg *ngIf="copyStatus === 'copied'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="copy-icon check-icon">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <span>{{ copyStatus === 'copied' ? 'Copied!' : 'Copy Code' }}</span>
+    </button>
+  </div>
+
+  <!-- Code area with line numbers -->
+  <div class="code-area">
+    <div *ngIf="showLineNumbers" class="line-numbers" aria-hidden="true">
+      <span *ngFor="let line of lines; let i = index">{{ i + 1 }}</span>
+    </div>
+    <pre class="code-pre"><code>{{ code }}</code></pre>
+  </div>
+</div>

@@ -1,0 +1,148 @@
+================================================================================
+CodeShelf — Free Angular Code Library Website (PHP & GenAI)
+================================================================================
+
+1. PREREQUISITES
+--------------------------------------------------------------------------------
+Before running or building this application, ensure your environment has:
+- Node.js: v20.x or higher (Tested with Node.js v24.21.0)
+- npm: v10.x or higher (Tested with npm v11.19.0)
+- Angular CLI: v21.x or higher (Tested with @angular/cli 21.2.23)
+
+To check your installed versions, run:
+  node -v
+  npm -v
+  ng version
+
+2. INSTALLING DEPENDENCIES
+--------------------------------------------------------------------------------
+From the project root directory (where package.json is located), run:
+  npm install
+
+This installs all required dependencies including Angular core, common,
+compiler, forms, platform-browser, router, and build tools.
+
+3. STARTING THE ANGULAR DEVELOPMENT SERVER
+--------------------------------------------------------------------------------
+To launch the local Angular development server with hot reload:
+  npm start
+    -- or --
+  ng serve
+
+To specify a custom port or open the browser automatically:
+  ng serve --port 4200 --open
+
+4. LOCAL URL TO OPEN IN THE BROWSER
+--------------------------------------------------------------------------------
+Open your web browser and navigate to:
+  http://localhost:4200/
+
+The application will immediately and automatically redirect you to the PHP practicals page:
+  http://localhost:4200/php
+
+5. ROUTES & PAGE STRUCTURE
+--------------------------------------------------------------------------------
+The website contains two dedicated content pages managed via Angular Router:
+
+1. PHP Practical Solutions Page:
+   - Route: http://localhost:4200/php
+   - Source: Scripting with PHP-II Journal Solutions.pdf
+   - Total Practical Programs: 20
+     • Prog 1: Temperature Difference & Integer Validation (index.html, temperature.php)
+     • Prog 2: Birthdate Formatting (index.html, birthdate.php)
+     • Prog 3: College Name String Operations (index.html, college.php)
+     • Prog 4: Cookie Management (index.html, first.php, second.php)
+     • Prog 5: Session Management (index.html, first.php, second.php)
+     • Prog 6: Text File Handling (index.html, first.php, log.txt)
+     • Prog 7: Profile Picture Upload & Renaming (index.html, upload.php)
+     • Prog 8: Student Result Using OOP (student.php)
+     • Prog 9 (Setup): Employee Database Setup & Connection (setup.sql, db.php)
+     • Prog 9(A): Insert Employee Record (insert.html, insert.php)
+     • Prog 9(B): Check Whether Employee Exists (check.html, check.php)
+     • Prog 9(C): Insert if New / Update if Existing (update.html, update.php)
+     • Prog 9(D): Display First Record — Form Layout (firstrecord.php)
+     • Prog 9(E): Display First Record — Table Layout (firsttable.php)
+     • Prog 9(F): Display Employees by Gender & Total Count (gender.html, gender.php)
+     • Prog 9(G): Highlight Newly Inserted Employee (insert_highlight.html, insert_highlight.php)
+     • Prog 9(H): Insert If Not Existing, Otherwise Display Record (insert_or_display.html, insert_or_display.php)
+     • Prog 9(I): Separate Male and Female Tables with Counts (gender_tables.php)
+     • Prog 9(J): Fetch Employee into Form and Update (edit.html, edit.php, save.php)
+     • Prog 9(K): Fetch Employee and Delete with Confirmation (delete.html, delete.php, confirm_delete.php)
+   - Total Code Blocks: 41
+   - Features: 'Copy All PHP Code' button, multi-file code blocks with individual copy buttons,
+     category filter chips, real-time search, and line numbers.
+
+2. GenAI Practical Solutions Page:
+   - Route: http://localhost:4200/genai
+   - Source: Gen AI Practical Solutions_261015_125349.pdf
+   - Total Tasks: 27 Practical Programs (exact solutions from PDF)
+     • Prog 1 to 10: Core Python string operations (sorting, search, format, replace, filter, count, translate, split)
+     • Prog 11 to 27: Hugging Face transformer pipelines (summarization, translation, paraphrasing, simplification, grammar correction, generation, QA, sentiment, classification, NER, keyword extraction, zero-shot, spam, language detection)
+   - Total Python Code Blocks: 27
+   - Features: 'Copy All GenAI Code' button (copies all 27 solutions with program number and definition), individual copy buttons,
+     real-time search across program numbers, definitions, and code.
+
+3. Root & Wildcard Fallback:
+   - Route '/' redirects to '/php'
+   - Route '**' (any undefined path) redirects to '/php'
+
+6. CREATING A PRODUCTION BUILD
+--------------------------------------------------------------------------------
+To compile an optimized, production-ready static bundle:
+  npm run build
+    -- or --
+  ng build
+
+The compiled production assets will be output to:
+  dist/code-shelf/browser/
+
+These static files can be hosted on any static web server or CDN (such as GitHub Pages,
+Cloudflare Pages, Vercel, Netlify, or Apache/Nginx).
+
+7. FRONTEND-ONLY ARCHITECTURE (NO BACKEND / DATABASE REQUIRED)
+--------------------------------------------------------------------------------
+- This website is 100% frontend-only.
+- It requires no backend server, no MySQL/PostgreSQL database, and no external API keys.
+- There are no user accounts, sign-ups, subscriptions, paid features, or login requirements.
+- All code data is bundled into structured, type-safe TypeScript modules:
+  • src/app/data/php-programs.ts
+  • src/app/data/genai-programs.ts
+  • src/app/models/program.model.ts
+
+8. EXECUTION ENVIRONMENT FOR EXTRACTED CODE SNIPPETS
+--------------------------------------------------------------------------------
+Please note that the code snippets displayed on the website are reference solutions:
+- PHP Practical Snippets:
+  To run the PHP and HTML code, you need a local web server with PHP and MySQL
+  (such as XAMPP, WAMP, or MAMP). Place the files in your web server's htdocs directory
+  (e.g., C:/xampp/htdocs/) and start the Apache and MySQL services. For database
+  practicals (Program 9), first run the setup.sql script in phpMyAdmin to create the
+  LYBCA database and employee table.
+
+- GenAI Python Snippets:
+  To run the Python scripts locally, you need Python 3.8+ installed. Install the
+  required NLP and Hugging Face dependencies via:
+    pip install transformers torch sentencepiece keybert
+
+9. ASSUMPTIONS AND LIMITATIONS
+--------------------------------------------------------------------------------
+1. Browser Clipboard API:
+   The website uses the modern navigator.clipboard API with an automatic textarea fallback
+   (document.execCommand('copy')). The Clipboard API requires a secure context (HTTPS or
+   http://localhost). If clipboard access is blocked by browser permissions, an error
+   toast is shown instructing the user.
+
+2. Syllabus vs Journal Fidelity:
+   - Tasks 28, 29, and 30 in the GenAI syllabus ('Self Dev 1, 2, 3') are listed as
+     handwritten self-development extensions without code in the source journal PDF.
+     They are represented accurately with notice badges rather than fabricating code.
+   - In GenAI Program 12, the problem statement specifies English to Hindi translation,
+     while the source journal provided Helsinki-NLP/opus-mt-en-fr (English to French).
+     The journal code is preserved faithfully, accompanied by an explanatory source note.
+   - In GenAI Programs 21, 26, and 27, PDF multi-line model identifiers have been
+     consolidated into valid single-line string literals to prevent Python syntax errors,
+     with notes detailing the formatting.
+
+================================================================================
+Generated and verified for the CodeShelf Project.
+================================================================================

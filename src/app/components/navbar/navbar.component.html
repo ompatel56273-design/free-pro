@@ -1,0 +1,103 @@
+<header class="navbar-wrapper">
+  <div class="navbar-container">
+    <!-- Brand / Logo -->
+    <a routerLink="/php" class="brand-link" (click)="closeMobileMenu()">
+      <div class="brand-logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="logo-svg">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+          <line x1="14" y1="4" x2="10" y2="20"></line>
+        </svg>
+      </div>
+      <div class="brand-text-group">
+        <span class="brand-title">Code<span class="brand-accent">Shelf</span></span>
+        <span class="brand-badge">Practical Library</span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation Links -->
+    <nav class="nav-links desktop-nav" aria-label="Main Navigation">
+      <a routerLink="/php" 
+         routerLinkActive="active-nav-link" 
+         class="nav-tab php-tab"
+         id="nav-php-link">
+        <div class="tab-icon-wrapper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="tab-icon">
+            <polyline points="4 17 10 11 4 5"></polyline>
+            <line x1="12" y1="19" x2="20" y2="19"></line>
+          </svg>
+        </div>
+        <div class="tab-text-group">
+          <span class="tab-label">PHP Practicals</span>
+          <span class="tab-sub">Scripting with PHP-II</span>
+        </div>
+        <span class="tab-count-badge">20 Progs</span>
+      </a>
+
+      <a routerLink="/genai" 
+         routerLinkActive="active-nav-link" 
+         class="nav-tab genai-tab"
+         id="nav-genai-link">
+        <div class="tab-icon-wrapper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="tab-icon">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+          </svg>
+        </div>
+        <div class="tab-text-group">
+          <span class="tab-label">GenAI Practicals</span>
+          <span class="tab-sub">HuggingFace & Transformers</span>
+        </div>
+        <span class="tab-count-badge">27 Progs</span>
+      </a>
+    </nav>
+
+    <!-- Mobile Hamburger Toggle -->
+    <button class="mobile-toggle-btn" 
+            (click)="toggleMobileMenu()" 
+            [attr.aria-expanded]="mobileMenuOpen"
+            aria-label="Toggle navigation menu">
+      <svg *ngIf="!mobileMenuOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="menu-icon">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+      <svg *ngIf="mobileMenuOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="menu-icon">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-drawer" [class.open]="mobileMenuOpen">
+    <nav class="mobile-nav-links" aria-label="Mobile Navigation">
+      <a routerLink="/php" 
+         routerLinkActive="active-mobile-link" 
+         (click)="closeMobileMenu()" 
+         class="mobile-nav-item php-item">
+        <div class="mobile-item-left">
+          <span class="mobile-icon-box php-box">PHP</span>
+          <div>
+            <div class="mobile-item-title">PHP Practicals</div>
+            <div class="mobile-item-sub">Scripting with PHP-II (20 Programs)</div>
+          </div>
+        </div>
+        <span class="mobile-count-pill">20 Progs</span>
+      </a>
+
+      <a routerLink="/genai" 
+         routerLinkActive="active-mobile-link" 
+         (click)="closeMobileMenu()" 
+         class="mobile-nav-item genai-item">
+        <div class="mobile-item-left">
+          <span class="mobile-icon-box genai-box">AI</span>
+          <div>
+            <div class="mobile-item-title">GenAI Practicals</div>
+            <div class="mobile-item-sub">Generative AI (27 Programs)</div>
+          </div>
+        </div>
+        <span class="mobile-count-pill">27 Progs</span>
+      </a>
+    </nav>
+  </div>
+</header>

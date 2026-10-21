@@ -1,0 +1,63 @@
+/* Global Reset & Base Typography */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  background-color: #0b0f19;
+  color: #f8fafc;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #0b0f19;
+  color: #e2e8f0;
+  overflow-x: hidden;
+}
+
+/* Custom Selection */
+::selection {
+  background: rgba(139, 92, 246, 0.35);
+  color: #ffffff;
+}
+
+/* Global Scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b0f19;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* Code Typography */
+code, pre, kbd, samp {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Common interactive transitions */
+button, a {
+  font-family: inherit;
+}
+
+button:focus-visible, a:focus-visible {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
+}

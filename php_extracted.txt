@@ -1,0 +1,1944 @@
+=== PAGE 1 ===
+Scripting with PHP-II — Complete Practical 
+Solutions 
+Program 1 — Temperature Difference 
+Question: Read 6 AM and 6 PM temperatures using an HTML form. Find the absolute 
+difference, check whether both are integers, and round the first temperature to 2 decimal places. 
+index.html 
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Temperature</title> 
+</head> 
+<body> 
+ 
+<h2>Temperature Calculation</h2> 
+ 
+<form method="post" action="temperature.php"> 
+ 
+    <label>Temperature at 6 AM:</label> 
+    <input type="text" name="temp1" required> 
+    <br><br> 
+ 
+    <label>Temperature at 6 PM:</label> 
+    <input type="text" name="temp2" required> 
+    <br><br> 
+ 
+    <input type="submit" value="Calculate"> 
+ 
+</form> 
+ 
+</body> 
+</html> 
+temperature.php 
+<?php 
+ 
+$temp1 = $_POST['temp1']; 
+$temp2 = $_POST['temp2']; 
+ 
+// Absolute difference 
+$difference = abs($temp1 - $temp2); 
+ 
+// Check whether temperatures are integers 
+if (filter_var($temp1, FILTER_VALIDATE_INT) !== false) { 
+    $check1 = "6 AM temperature is an integer."; 
+} else { 
+    $check1 = "6 AM temperature is not an integer."; 
+
+=== PAGE 2 ===
+} 
+ 
+if (filter_var($temp2, FILTER_VALIDATE_INT) !== false) { 
+    $check2 = "6 PM temperature is an integer."; 
+} else { 
+    $check2 = "6 PM temperature is not an integer."; 
+} 
+ 
+// Round first temperature to 2 decimal places 
+$roundedTemp1 = round($temp1, 2); 
+ 
+echo "<h2>Temperature Result</h2>"; 
+ 
+echo "6 AM Temperature: " . $temp1 . "<br>"; 
+echo "6 PM Temperature: " . $temp2 . "<br>"; 
+echo "Absolute Difference: " . $difference . "<br>"; 
+echo $check1 . "<br>"; 
+echo $check2 . "<br>"; 
+echo "6 AM Temperature after rounding: " . $roundedTemp1; 
+ 
+?> 
+ 
+Program 2 — Birthdate Formatting 
+The journal asks to read the birthdate and print it in different formats using PHP date format 
+specifiers. 
+index.html 
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Birthdate</title> 
+</head> 
+<body> 
+ 
+<h2>Birthdate Format</h2> 
+ 
+<form method="post" action="birthdate.php"> 
+ 
+    <label>Enter Birthdate:</label> 
+    <input type="date" name="birthdate" required> 
+ 
+    <br><br> 
+ 
+    <input type="submit" value="Display Date"> 
+ 
+</form> 
+ 
+</body> 
+</html> 
+
+=== PAGE 3 ===
+birthdate.php 
+<?php 
+ 
+$birthdate = $_POST['birthdate']; 
+ 
+$date = new DateTime($birthdate); 
+ 
+echo "<h2>Birthdate in Different Formats</h2>"; 
+ 
+echo "Format 1 (d-m-Y): " . $date->format("d-m-Y") . "<br>"; 
+echo "Format 2 (d/m/Y): " . $date->format("d/m/Y") . "<br>"; 
+echo "Format 3 (d M Y): " . $date->format("d M Y") . "<br>"; 
+echo "Format 4 (d F Y): " . $date->format("d F Y") . "<br>"; 
+echo "Format 5 (l, d F Y): " . $date->format("l, d F Y") . "<br>"; 
+echo "Format 6 (Y-m-d): " . $date->format("Y-m-d") . "<br>"; 
+ 
+?> 
+Important Date Specifiers 
+Specifier Meaning 
+d Day 
+m Month number 
+Y 4-digit year 
+y 2-digit year 
+M Short month name 
+F Full month name 
+l Full day name 
+ 
+Program 3 — College Name String 
+Operations 
+The program must count characters, check whether the last word is college case-insensitively, 
+and replace college with university. 
+index.html 
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>College Name</title> 
+</head> 
+<body> 
+ 
+<h2>College Name</h2> 
+
+=== PAGE 4 ===
+ 
+<form method="post" action="college.php"> 
+ 
+    <label>Enter College Name:</label> 
+    <input type="text" name="college" required> 
+ 
+    <br><br> 
+ 
+    <input type="submit" value="Submit"> 
+ 
+</form> 
+ 
+</body> 
+</html> 
+college.php 
+<?php 
+ 
+$college = trim($_POST['college']); 
+ 
+// Number of characters 
+$characters = strlen($college); 
+ 
+// Convert string into words 
+$words = preg_split('/\s+/', $college); 
+ 
+// Get last word 
+$lastWord = end($words); 
+ 
+echo "<h2>College Details</h2>"; 
+ 
+echo "College Name: " . $college . "<br>"; 
+echo "Number of Characters: " . $characters . "<br>"; 
+ 
+// Case-insensitive check 
+if (strcasecmp($lastWord, "college") == 0) { 
+ 
+    echo "Last word is 'college'.<br>"; 
+ 
+    // Replace last occurrence of college 
+    $newCollege = preg_replace( 
+        '/college$/i', 
+        'university', 
+        $college 
+    ); 
+ 
+    echo "After Replacement: " . $newCollege; 
+ 
+} else { 
+ 
+    echo "Last word is not 'college'.<br>"; 
+    echo "No replacement required."; 
+ 
+} 
+ 
+
+=== PAGE 5 ===
+?> 
+ 
+Program 4 — Cookie 
+The requirement is to remember the username even after the browser is closed and reopened. The 
+cookie is valid for 1 day. 
+index.html 
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Cookie Example</title> 
+</head> 
+<body> 
+ 
+<h2>Login Form</h2> 
+ 
+<form method="post" action="first.php"> 
+ 
+    <label>Username:</label> 
+    <input type="text" name="username" required> 
+ 
+    <br><br> 
+ 
+    <label>Password:</label> 
+    <input type="password" name="password" required> 
+ 
+    <br><br> 
+ 
+    <input type="submit" value="Login"> 
+ 
+</form> 
+ 
+</body> 
+</html> 
+first.php 
+<?php 
+ 
+$username = $_POST['username']; 
+ 
+// Cookie valid for 1 day 
+setcookie("username", $username, time() + (24 * 60 * 60), "/"); 
+ 
+echo "<h2>Hello " . htmlspecialchars($username) . "</h2>"; 
+ 
+echo "<p>Your username has been stored in a cookie for 1 day.</p>"; 
+ 
+echo '<a href="second.php">Check Cookie</a>'; 
+ 
+
+=== PAGE 6 ===
+?> 
+second.php 
+<?php 
+ 
+if (isset($_COOKIE['username'])) { 
+ 
+    $username = $_COOKIE['username']; 
+ 
+    echo "<h2>Hello " . htmlspecialchars($username) . 
+         ", your cookie is still active!</h2>"; 
+ 
+} else { 
+ 
+    echo "<h2>Cookie has expired or does not exist.</h2>"; 
+ 
+} 
+ 
+?> 
+How to demonstrate 
+1. Open index.html. 
+2. Enter username and password. 
+3. Submit the form. 
+4. Open second.php. 
+5. You will see: 
+Hello Mehul, your cookie is still active! 
+6. Close and reopen the browser. 
+7. Open second.php again. 
+8. The username should still be available. 
+9. After 1 day, the cookie expires. 
+Program 5 — Session 
+The session should remember the username while the browser session is active and should not 
+permanently store it like a 1-day cookie. 
+index.html 
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Session Example</title> 
+</head> 
+<body> 
+ 
+
+=== PAGE 7 ===
+<h2>Login Form</h2> 
+ 
+<form method="post" action="first.php"> 
+ 
+    <label>Username:</label> 
+    <input type="text" name="username" required> 
+ 
+    <br><br> 
+ 
+    <label>Password:</label> 
+    <input type="password" name="password" required> 
+ 
+    <br><br> 
+ 
+    <input type="submit" value="Login"> 
+ 
+</form> 
+ 
+</body> 
+</html> 
+first.php 
+<?php 
+ 
+session_start(); 
+ 
+$username = $_POST['username']; 
+ 
+$_SESSION['username'] = $username; 
+ 
+echo "<h2>Hello " . htmlspecialchars($username) . "</h2>"; 
+ 
+echo "<p>Your session has been started.</p>"; 
+ 
+echo '<a href="second.php">Check Session</a>'; 
+ 
+?> 
+second.php 
+<?php 
+ 
+session_start(); 
+ 
+if (isset($_SESSION['username'])) { 
+ 
+    $username = $_SESSION['username']; 
+ 
+    echo "<h2>Hello " . htmlspecialchars($username) . 
+         ", your session is active!</h2>"; 
+ 
+} else { 
+ 
+    echo "<h2>Session is not defined.</h2>"; 
+ 
+
+=== PAGE 8 ===
+} 
+ 
+?> 
+Important difference 
+Cookie: 
+setcookie(); 
+Session: 
+session_start(); 
+$_SESSION['username']; 
+ 
+Program 6 — Text File Handling 
+The journal requires a text file log.txt with operations for append, display/search, and delete. 
+index.html 
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Visitor Log</title> 
+</head> 
+<body> 
+ 
+<h2>Visitor Log</h2> 
+ 
+<form method="post" action="first.php"> 
+ 
+    <label>Visitor Name:</label> 
+    <input type="text" name="name"> 
+ 
+    <br><br> 
+ 
+    <label>Select Operation:</label> 
+ 
+    <select name="operation"> 
+ 
+        <option value="append">Append</option> 
+        <option value="display">Display</option> 
+        <option value="delete">Delete File</option> 
+ 
+    </select> 
+ 
+    <br><br> 
+ 
+    <input type="submit" value="Submit"> 
+ 
+
+=== PAGE 9 ===
+</form> 
+ 
+</body> 
+</html> 
+first.php 
+<?php 
+ 
+$file = "log.txt"; 
+ 
+$operation = $_POST['operation']; 
+ 
+if ($operation == "append") { 
+ 
+    $name = trim($_POST['name']); 
+ 
+    if ($name != "") { 
+ 
+        // Open file in append mode 
+        $fp = fopen($file, "a"); 
+ 
+        // Write visitor name 
+        fwrite($fp, $name . PHP_EOL); 
+ 
+        fclose($fp); 
+ 
+        echo "<h3>Visitor name added successfully.</h3>"; 
+ 
+    } else { 
+ 
+        echo "<h3>Please enter visitor name.</h3>"; 
+ 
+    } 
+ 
+} elseif ($operation == "display") { 
+ 
+    if (file_exists($file)) { 
+ 
+        $fp = fopen($file, "r"); 
+ 
+        echo "<h2>Visitor List</h2>"; 
+ 
+        echo "<table border='1' cellpadding='10'>"; 
+        echo "<tr><th>No.</th><th>Visitor Name</th></tr>"; 
+ 
+        $count = 1; 
+ 
+        while (($line = fgets($fp)) !== false) { 
+ 
+            echo "<tr>"; 
+            echo "<td>" . $count . "</td>"; 
+            echo "<td>" . htmlspecialchars(trim($line)) . "</td>"; 
+            echo "</tr>"; 
+ 
+            $count++; 
+
+=== PAGE 10 ===
+        } 
+ 
+        echo "</table>"; 
+ 
+        fclose($fp); 
+ 
+    } else { 
+ 
+        echo "<h3>Log file does not exist.</h3>"; 
+ 
+    } 
+ 
+} elseif ($operation == "delete") { 
+ 
+    if (file_exists($file)) { 
+ 
+        unlink($file); 
+ 
+        echo "<h3>Log file deleted successfully.</h3>"; 
+ 
+    } else { 
+ 
+        echo "<h3>Log file does not exist.</h3>"; 
+ 
+    } 
+ 
+} 
+ 
+?> 
+File modes used 
+Mode Meaning 
+r Read 
+w Write and overwrite 
+a Append without deleting existing data 
+ 
+Program 7 — Profile Picture Upload 
+The program requires enrolment number and profile picture, with the picture renamed using the 
+enrolment number and stored in the htdocs/images folder. 
+Folder Structure 
+For XAMPP: 
+htdocs 
+│ 
+
+=== PAGE 11 ===
+├── program7 
+│   ├── index.html 
+│   └── upload.php 
+│ 
+└── images 
+Create the images folder inside htdocs. 
+index.html 
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Profile Picture Upload</title> 
+</head> 
+<body> 
+ 
+<h2>Student Profile Picture</h2> 
+ 
+<form method="post" 
+      action="upload.php" 
+      enctype="multipart/form-data"> 
+ 
+    <label>Enrolment Number:</label> 
+    <input type="text" name="enrolment" required> 
+ 
+    <br><br> 
+ 
+    <label>Profile Picture:</label> 
+    <input type="file" 
+           name="profile" 
+           accept="image/*" 
+           required> 
+ 
+    <br><br> 
+ 
+    <input type="submit" value="Upload"> 
+ 
+</form> 
+ 
+</body> 
+</html> 
+upload.php 
+<?php 
+ 
+$enrolment = $_POST['enrolment']; 
+ 
+$fileName = $_FILES['profile']['name']; 
+$fileTmpName = $_FILES['profile']['tmp_name']; 
+$fileError = $_FILES['profile']['error']; 
+ 
+if ($fileError == 0) { 
+ 
+
+=== PAGE 12 ===
+    // Get original file extension 
+    $extension = pathinfo($fileName, PATHINFO_EXTENSION); 
+ 
+    // New file name 
+    $newFileName = $enrolment . "." . $extension; 
+ 
+    // Destination folder 
+    $destination = "C:/xampp/htdocs/images/" . $newFileName; 
+ 
+    // Move uploaded file 
+    if (move_uploaded_file($fileTmpName, $destination)) { 
+ 
+        echo "<h2>Profile picture uploaded successfully.</h2>"; 
+ 
+        echo "Enrolment Number: " . 
+             htmlspecialchars($enrolment) . "<br>"; 
+ 
+        echo "File Name: " . 
+             htmlspecialchars($newFileName); 
+ 
+    } else { 
+ 
+        echo "<h2>File upload failed.</h2>"; 
+ 
+    } 
+ 
+} else { 
+ 
+    echo "<h2>Error while uploading file.</h2>"; 
+ 
+} 
+ 
+?> 
+Important Form Attribute 
+For file upload, this is compulsory: 
+enctype="multipart/form-data" 
+ 
+Program 8 — Student Result Using OOP 
+The journal specifically requires a Student class with public properties, constructor, private 
+calc() and res() methods, private result properties, and public disp() method. 
+student.php 
+<?php 
+ 
+class Student 
+{ 
+
+=== PAGE 13 ===
+    // Public properties 
+    public $enrolment_no; 
+    public $name; 
+    public $marks; 
+ 
+    // Private properties 
+    private $total; 
+    private $perc; 
+    private $result; 
+ 
+    // Constructor 
+    public function __construct($enrolment_no, $name, $marks) 
+    { 
+        $this->enrolment_no = $enrolment_no; 
+        $this->name = $name; 
+        $this->marks = $marks; 
+    } 
+ 
+    // Calculate total and percentage 
+    private function calc() 
+    { 
+        $this->total = array_sum($this->marks); 
+ 
+        $this->perc = $this->total / 5; 
+    } 
+ 
+    // Calculate result 
+    private function res() 
+    { 
+        $this->result = "PASS"; 
+ 
+        // If any subject mark is less than 35 
+        foreach ($this->marks as $mark) { 
+ 
+            if ($mark < 35) { 
+ 
+                $this->result = "FAIL"; 
+                break; 
+ 
+            } 
+        } 
+    } 
+ 
+    // Display student information 
+    public function disp() 
+    { 
+        // Call private methods 
+        $this->calc(); 
+        $this->res(); 
+ 
+        echo "<h2>Student Result</h2>"; 
+ 
+        echo "<table border='1' cellpadding='10'>"; 
+ 
+        echo "<tr>"; 
+        echo "<th>Enrolment No.</th>"; 
+        echo "<td>" . htmlspecialchars($this->enrolment_no) . "</td>"; 
+
+=== PAGE 14 ===
+        echo "</tr>"; 
+ 
+        echo "<tr>"; 
+        echo "<th>Name</th>"; 
+        echo "<td>" . htmlspecialchars($this->name) . "</td>"; 
+        echo "</tr>"; 
+ 
+        echo "<tr>"; 
+        echo "<th>Subject 1</th>"; 
+        echo "<td>" . $this->marks[0] . "</td>"; 
+        echo "</tr>"; 
+ 
+        echo "<tr>"; 
+        echo "<th>Subject 2</th>"; 
+        echo "<td>" . $this->marks[1] . "</td>"; 
+        echo "</tr>"; 
+ 
+        echo "<tr>"; 
+        echo "<th>Subject 3</th>"; 
+        echo "<td>" . $this->marks[2] . "</td>"; 
+        echo "</tr>"; 
+ 
+        echo "<tr>"; 
+        echo "<th>Subject 4</th>"; 
+        echo "<td>" . $this->marks[3] . "</td>"; 
+        echo "</tr>"; 
+ 
+        echo "<tr>"; 
+        echo "<th>Subject 5</th>"; 
+        echo "<td>" . $this->marks[4] . "</td>"; 
+        echo "</tr>"; 
+ 
+        echo "<tr>"; 
+        echo "<th>Total</th>"; 
+        echo "<td>" . $this->total . "</td>"; 
+        echo "</tr>"; 
+ 
+        echo "<tr>"; 
+        echo "<th>Percentage</th>"; 
+        echo "<td>" . $this->perc . "%</td>"; 
+        echo "</tr>"; 
+ 
+        echo "<tr>"; 
+        echo "<th>Result</th>"; 
+        echo "<td>" . $this->result . "</td>"; 
+        echo "</tr>"; 
+ 
+        echo "</table>"; 
+    } 
+} 
+ 
+ 
+// Create object 
+$student = new Student( 
+    "SPU001", 
+    "Rahul Patel", 
+    array(78, 85, 69, 72, 88) 
+
+=== PAGE 15 ===
+); 
+ 
+// Display result 
+$student->disp(); 
+ 
+?> 
+OOP concepts used 
+• Class 
+• Object 
+• Public properties 
+• Private properties 
+• Constructor 
+• Private methods 
+• Public method 
+• Encapsulation 
+Program 9 — Employee Database 
+The journal requires an employee table in the LYBCA database with Empid, Ename, Deptcode, 
+Joining date, and Gender. 
+Step 1 — Create Database 
+Run this in phpMyAdmin → SQL: 
+CREATE DATABASE LYBCA; 
+Then select LYBCA and run: 
+CREATE TABLE employee 
+( 
+    Empid INT(3) PRIMARY KEY, 
+    Ename VARCHAR(35), 
+    Deptcode CHAR(1), 
+    JoiningDate DATE, 
+    Gender CHAR(1) 
+); 
+Department Codes 
+A = Admin 
+S = Sales 
+F = Finance 
+Gender Codes 
+
+=== PAGE 16 ===
+M = Male 
+F = Female 
+Common Database Connection 
+Create: 
+db.php 
+<?php 
+ 
+$conn = mysqli_connect( 
+    "localhost", 
+    "root", 
+    "", 
+    "LYBCA" 
+); 
+ 
+if (!$conn) { 
+ 
+    die("Database connection failed: " . mysqli_connect_error()); 
+ 
+} 
+ 
+?> 
+If your MySQL password is different, replace the empty password "". 
+9(A) Insert Employee Record 
+The journal requires an HTML form to read employee details and insert them into the table. 
+insert.html 
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Insert Employee</title> 
+</head> 
+<body> 
+ 
+<h2>Employee Registration</h2> 
+ 
+<form method="post" action="insert.php"> 
+ 
+    Employee ID: 
+    <input type="text" name="empid" required> 
+    <br><br> 
+ 
+    Employee Name: 
+    <input type="text" name="ename" required> 
+
+=== PAGE 17 ===
+    <br><br> 
+ 
+    Department: 
+    <input type="radio" name="deptcode" value="A"> Admin 
+    <input type="radio" name="deptcode" value="S"> Sales 
+    <input type="radio" name="deptcode" value="F"> Finance 
+    <br><br> 
+ 
+    Joining Date: 
+    <input type="date" name="joiningdate" required> 
+    <br><br> 
+ 
+    Gender: 
+    <select name="gender"> 
+ 
+        <option value="M">Male</option> 
+        <option value="F">Female</option> 
+ 
+    </select> 
+ 
+    <br><br> 
+ 
+    <input type="submit" value="Insert"> 
+ 
+</form> 
+ 
+</body> 
+</html> 
+insert.php 
+<?php 
+ 
+include "db.php"; 
+ 
+$empid = $_POST['empid']; 
+$ename = $_POST['ename']; 
+$deptcode = $_POST['deptcode']; 
+$joiningdate = $_POST['joiningdate']; 
+$gender = $_POST['gender']; 
+ 
+$sql = "INSERT INTO employee 
+        VALUES 
+        ('$empid', '$ename', '$deptcode', '$joiningdate', '$gender')"; 
+ 
+if (mysqli_query($conn, $sql)) { 
+ 
+    echo "<h3>Employee record inserted successfully.</h3>"; 
+ 
+} else { 
+ 
+    echo "Error: " . mysqli_error($conn); 
+ 
+} 
+ 
+mysqli_close($conn); 
+
+=== PAGE 18 ===
+ 
+?> 
+ 
+9(B) Check Whether Employee Exists 
+The requirement is to read empid and display Record exists or Record does not exist. 
+check.html 
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Check Employee</title> 
+</head> 
+<body> 
+ 
+<h2>Check Employee Record</h2> 
+ 
+<form method="post" action="check.php"> 
+ 
+    Employee ID: 
+    <input type="text" name="empid" required> 
+ 
+    <br><br> 
+ 
+    <input type="submit" value="Check"> 
+ 
+</form> 
+ 
+</body> 
+</html> 
+check.php 
+<?php 
+ 
+include "db.php"; 
+ 
+$empid = $_POST['empid']; 
+ 
+$sql = "SELECT * FROM employee WHERE Empid = '$empid'"; 
+ 
+$result = mysqli_query($conn, $sql); 
+ 
+if (mysqli_num_rows($result) > 0) { 
+ 
+    echo "<h3>Record exists</h3>"; 
+ 
+} else { 
+ 
+    echo "<h3>Record does not exist</h3>"; 
+ 
+
+=== PAGE 19 ===
+} 
+ 
+mysqli_close($conn); 
+ 
+?> 
+ 
+9(C) Insert if New / Update if Existing 
+The question requires displaying the record before updating and after updating. 
+update.html 
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Insert or Update</title> 
+</head> 
+<body> 
+ 
+<h2>Employee Details</h2> 
+ 
+<form method="post" action="update.php"> 
+ 
+    Employee ID: 
+    <input type="text" name="empid" required> 
+    <br><br> 
+ 
+    Employee Name: 
+    <input type="text" name="ename" required> 
+    <br><br> 
+ 
+    Department: 
+ 
+    <input type="radio" name="deptcode" value="A"> Admin 
+    <input type="radio" name="deptcode" value="S"> Sales 
+    <input type="radio" name="deptcode" value="F"> Finance 
+ 
+    <br><br> 
+ 
+    Joining Date: 
+    <input type="date" name="joiningdate" required> 
+    <br><br> 
+ 
+    Gender: 
+ 
+    <select name="gender"> 
+        <option value="M">Male</option> 
+        <option value="F">Female</option> 
+    </select> 
+ 
+    <br><br> 
+ 
+    <input type="submit" value="Submit"> 
+
+=== PAGE 20 ===
+ 
+</form> 
+ 
+</body> 
+</html> 
+update.php 
+<?php 
+ 
+include "db.php"; 
+ 
+$empid = $_POST['empid']; 
+$ename = $_POST['ename']; 
+$deptcode = $_POST['deptcode']; 
+$joiningdate = $_POST['joiningdate']; 
+$gender = $_POST['gender']; 
+ 
+// Check record 
+$sql = "SELECT * FROM employee WHERE Empid='$empid'"; 
+ 
+$result = mysqli_query($conn, $sql); 
+ 
+if (mysqli_num_rows($result) > 0) { 
+ 
+    // Display BEFORE 
+    $row = mysqli_fetch_assoc($result); 
+ 
+    echo "<h2>Record Before Updating</h2>"; 
+ 
+    echo "Employee ID: " . $row['Empid'] . "<br>"; 
+    echo "Name: " . $row['Ename'] . "<br>"; 
+    echo "Department: " . $row['Deptcode'] . "<br>"; 
+    echo "Joining Date: " . $row['JoiningDate'] . "<br>"; 
+    echo "Gender: " . $row['Gender'] . "<br><br>"; 
+ 
+    // Update 
+    $sql = "UPDATE employee SET 
+            Ename='$ename', 
+            Deptcode='$deptcode', 
+            JoiningDate='$joiningdate', 
+            Gender='$gender' 
+            WHERE Empid='$empid'"; 
+ 
+    mysqli_query($conn, $sql); 
+ 
+    // Display AFTER 
+    $sql = "SELECT * FROM employee WHERE Empid='$empid'"; 
+ 
+    $result = mysqli_query($conn, $sql); 
+ 
+    $row = mysqli_fetch_assoc($result); 
+ 
+    echo "<h2>Record After Updating</h2>"; 
+ 
+    echo "Employee ID: " . $row['Empid'] . "<br>"; 
+
+=== PAGE 21 ===
+    echo "Name: " . $row['Ename'] . "<br>"; 
+    echo "Department: " . $row['Deptcode'] . "<br>"; 
+    echo "Joining Date: " . $row['JoiningDate'] . "<br>"; 
+    echo "Gender: " . $row['Gender'] . "<br>"; 
+ 
+} else { 
+ 
+    // Insert new record 
+    $sql = "INSERT INTO employee 
+            VALUES 
+            ('$empid','$ename','$deptcode','$joiningdate','$gender')"; 
+ 
+    mysqli_query($conn, $sql); 
+ 
+    echo "<h3>New record inserted successfully.</h3>"; 
+} 
+ 
+mysqli_close($conn); 
+ 
+?> 
+ 
+9(D) Display First Record — Form Layout 
+The question asks to fetch the first employee record and display it in form layout. 
+firstrecord.php 
+<?php 
+ 
+include "db.php"; 
+ 
+$sql = "SELECT * FROM employee LIMIT 1"; 
+ 
+$result = mysqli_query($conn, $sql); 
+ 
+if (mysqli_num_rows($result) > 0) { 
+ 
+    $row = mysqli_fetch_assoc($result); 
+ 
+    echo "<h2>First Employee Record</h2>"; 
+ 
+    echo "Employee ID: " . $row['Empid'] . "<br><br>"; 
+ 
+    echo "Employee Name: " . 
+         $row['Ename'] . "<br><br>"; 
+ 
+    echo "Department: " . 
+         $row['Deptcode'] . "<br><br>"; 
+ 
+    echo "Joining Date: " . 
+         $row['JoiningDate'] . "<br><br>"; 
+ 
+    echo "Gender: " . 
+
+=== PAGE 22 ===
+         $row['Gender']; 
+ 
+} else { 
+ 
+    echo "No records found."; 
+ 
+} 
+ 
+?> 
+ 
+9(E) Display First Record — Table Layout 
+The required output is in tabular format. 
+firsttable.php 
+<?php 
+ 
+include "db.php"; 
+ 
+$sql = "SELECT * FROM employee LIMIT 1"; 
+ 
+$result = mysqli_query($conn, $sql); 
+ 
+if (mysqli_num_rows($result) > 0) { 
+ 
+    $row = mysqli_fetch_assoc($result); 
+ 
+    echo "<h2>First Employee Record</h2>"; 
+ 
+    echo "<table border='1' cellpadding='10'>"; 
+ 
+    echo "<tr>"; 
+    echo "<th>Employee ID</th>"; 
+    echo "<th>Employee Name</th>"; 
+    echo "<th>Department</th>"; 
+    echo "<th>Joining Date</th>"; 
+    echo "<th>Gender</th>"; 
+    echo "</tr>"; 
+ 
+    echo "<tr>"; 
+ 
+    echo "<td>" . $row['Empid'] . "</td>"; 
+    echo "<td>" . $row['Ename'] . "</td>"; 
+    echo "<td>" . $row['Deptcode'] . "</td>"; 
+    echo "<td>" . $row['JoiningDate'] . "</td>"; 
+    echo "<td>" . $row['Gender'] . "</td>"; 
+ 
+    echo "</tr>"; 
+ 
+    echo "</table>"; 
+ 
+} else { 
+
+=== PAGE 23 ===
+ 
+    echo "No records found."; 
+ 
+} 
+ 
+?> 
+ 
+9(F) Display Employees by Gender 
+The question requires reading gender, displaying all employees of that gender, and printing the 
+total number. 
+gender.html 
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Employee Gender</title> 
+</head> 
+<body> 
+ 
+<h2>Employee Details by Gender</h2> 
+ 
+<form method="post" action="gender.php"> 
+ 
+    Select Gender: 
+ 
+    <select name="gender"> 
+ 
+        <option value="M">Male</option> 
+        <option value="F">Female</option> 
+ 
+    </select> 
+ 
+    <br><br> 
+ 
+    <input type="submit" value="Display"> 
+ 
+</form> 
+ 
+</body> 
+</html> 
+gender.php 
+<?php 
+ 
+include "db.php"; 
+ 
+$gender = $_POST['gender']; 
+ 
+$sql = "SELECT * FROM employee 
+
+=== PAGE 24 ===
+        WHERE Gender='$gender'"; 
+ 
+$result = mysqli_query($conn, $sql); 
+ 
+echo "<h2>Employee Details</h2>"; 
+ 
+echo "<table border='1' cellpadding='10'>"; 
+ 
+echo "<tr>"; 
+echo "<th>Emp ID</th>"; 
+echo "<th>Name</th>"; 
+echo "<th>Department</th>"; 
+echo "<th>Joining Date</th>"; 
+echo "<th>Gender</th>"; 
+echo "</tr>"; 
+ 
+$count = 0; 
+ 
+while ($row = mysqli_fetch_assoc($result)) { 
+ 
+    echo "<tr>"; 
+ 
+    echo "<td>" . $row['Empid'] . "</td>"; 
+    echo "<td>" . $row['Ename'] . "</td>"; 
+    echo "<td>" . $row['Deptcode'] . "</td>"; 
+    echo "<td>" . $row['JoiningDate'] . "</td>"; 
+    echo "<td>" . $row['Gender'] . "</td>"; 
+ 
+    echo "</tr>"; 
+ 
+    $count++; 
+} 
+ 
+echo "</table>"; 
+ 
+echo "<h3>Total Employees: " . $count . "</h3>"; 
+ 
+mysqli_close($conn); 
+ 
+?> 
+ 
+9(G) Highlight Newly Inserted Employee 
+The requirement is to display records before and after insertion in separate tables and highlight 
+the inserted employee's row in pink in both tables. 
+insert_highlight.html 
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Employee Insert</title> 
+</head> 
+
+=== PAGE 25 ===
+<body> 
+ 
+<h2>Insert Employee</h2> 
+ 
+<form method="post" action="insert_highlight.php"> 
+ 
+    Employee ID: 
+    <input type="text" name="empid" required> 
+    <br><br> 
+ 
+    Employee Name: 
+    <input type="text" name="ename" required> 
+    <br><br> 
+ 
+    Department: 
+ 
+    <input type="radio" name="deptcode" value="A"> Admin 
+    <input type="radio" name="deptcode" value="S"> Sales 
+    <input type="radio" name="deptcode" value="F"> Finance 
+ 
+    <br><br> 
+ 
+    Joining Date: 
+    <input type="date" name="joiningdate" required> 
+    <br><br> 
+ 
+    Gender: 
+ 
+    <select name="gender"> 
+        <option value="M">Male</option> 
+        <option value="F">Female</option> 
+    </select> 
+ 
+    <br><br> 
+ 
+    <input type="submit" value="Insert"> 
+ 
+</form> 
+ 
+</body> 
+</html> 
+insert_highlight.php 
+<?php 
+ 
+include "db.php"; 
+ 
+$empid = $_POST['empid']; 
+$ename = $_POST['ename']; 
+$deptcode = $_POST['deptcode']; 
+$joiningdate = $_POST['joiningdate']; 
+$gender = $_POST['gender']; 
+ 
+// Get records BEFORE insertion 
+$before = mysqli_query($conn, "SELECT * FROM employee"); 
+
+=== PAGE 26 ===
+ 
+// Insert new record 
+$sql = "INSERT INTO employee 
+        VALUES 
+        ('$empid','$ename','$deptcode','$joiningdate','$gender')"; 
+ 
+mysqli_query($conn, $sql); 
+ 
+// Display BEFORE table 
+echo "<h2>Records Before Inserting</h2>"; 
+ 
+echo "<table border='1' cellpadding='10'>"; 
+ 
+echo "<tr> 
+        <th>Emp ID</th> 
+        <th>Name</th> 
+        <th>Department</th> 
+        <th>Joining Date</th> 
+        <th>Gender</th> 
+      </tr>"; 
+ 
+while ($row = mysqli_fetch_assoc($before)) { 
+ 
+    echo "<tr>"; 
+ 
+    echo "<td>" . $row['Empid'] . "</td>"; 
+    echo "<td>" . $row['Ename'] . "</td>"; 
+    echo "<td>" . $row['Deptcode'] . "</td>"; 
+    echo "<td>" . $row['JoiningDate'] . "</td>"; 
+    echo "<td>" . $row['Gender'] . "</td>"; 
+ 
+    echo "</tr>"; 
+} 
+ 
+// Highlight newly inserted employee 
+echo "<tr style='background-color:pink'>"; 
+ 
+echo "<td>" . $empid . "</td>"; 
+echo "<td>" . $ename . "</td>"; 
+echo "<td>" . $deptcode . "</td>"; 
+echo "<td>" . $joiningdate . "</td>"; 
+echo "<td>" . $gender . "</td>"; 
+ 
+echo "</tr>"; 
+ 
+echo "</table>"; 
+ 
+ 
+// Display AFTER table 
+ 
+echo "<h2>Records After Inserting</h2>"; 
+ 
+$after = mysqli_query($conn, "SELECT * FROM employee"); 
+ 
+echo "<table border='1' cellpadding='10'>"; 
+ 
+echo "<tr> 
+
+=== PAGE 27 ===
+        <th>Emp ID</th> 
+        <th>Name</th> 
+        <th>Department</th> 
+        <th>Joining Date</th> 
+        <th>Gender</th> 
+      </tr>"; 
+ 
+while ($row = mysqli_fetch_assoc($after)) { 
+ 
+    if ($row['Empid'] == $empid) { 
+ 
+        echo "<tr style='background-color:pink'>"; 
+ 
+    } else { 
+ 
+        echo "<tr>"; 
+ 
+    } 
+ 
+    echo "<td>" . $row['Empid'] . "</td>"; 
+    echo "<td>" . $row['Ename'] . "</td>"; 
+    echo "<td>" . $row['Deptcode'] . "</td>"; 
+    echo "<td>" . $row['JoiningDate'] . "</td>"; 
+    echo "<td>" . $row['Gender'] . "</td>"; 
+ 
+    echo "</tr>"; 
+} 
+ 
+echo "</table>"; 
+ 
+mysqli_close($conn); 
+ 
+?> 
+ 
+9(H) Insert If Not Existing, Otherwise 
+Display Existing Record 
+The requirement is to insert a record when it does not exist; otherwise display the existing 
+employee's details. 
+insert_or_display.html 
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Employee Record</title> 
+</head> 
+<body> 
+ 
+<h2>Employee Details</h2> 
+ 
+
+=== PAGE 28 ===
+<form method="post" action="insert_or_display.php"> 
+ 
+    Employee ID: 
+    <input type="text" name="empid" required> 
+    <br><br> 
+ 
+    Employee Name: 
+    <input type="text" name="ename" required> 
+    <br><br> 
+ 
+    Department: 
+ 
+    <input type="radio" name="deptcode" value="A"> Admin 
+    <input type="radio" name="deptcode" value="S"> Sales 
+    <input type="radio" name="deptcode" value="F"> Finance 
+ 
+    <br><br> 
+ 
+    Joining Date: 
+    <input type="date" name="joiningdate" required> 
+    <br><br> 
+ 
+    Gender: 
+ 
+    <select name="gender"> 
+ 
+        <option value="M">Male</option> 
+        <option value="F">Female</option> 
+ 
+    </select> 
+ 
+    <br><br> 
+ 
+    <input type="submit" value="Submit"> 
+ 
+</form> 
+ 
+</body> 
+</html> 
+insert_or_display.php 
+<?php 
+ 
+include "db.php"; 
+ 
+$empid = $_POST['empid']; 
+$ename = $_POST['ename']; 
+$deptcode = $_POST['deptcode']; 
+$joiningdate = $_POST['joiningdate']; 
+$gender = $_POST['gender']; 
+ 
+$sql = "SELECT * FROM employee 
+        WHERE Empid='$empid'"; 
+ 
+$result = mysqli_query($conn, $sql); 
+
+=== PAGE 29 ===
+ 
+if (mysqli_num_rows($result) > 0) { 
+ 
+    // Existing record 
+    $row = mysqli_fetch_assoc($result); 
+ 
+    echo "<h2>Record Already Exists</h2>"; 
+ 
+    echo "<table border='1' cellpadding='10'>"; 
+ 
+    echo "<tr>"; 
+    echo "<th>Employee ID</th>"; 
+    echo "<th>Name</th>"; 
+    echo "<th>Department</th>"; 
+    echo "<th>Joining Date</th>"; 
+    echo "<th>Gender</th>"; 
+    echo "</tr>"; 
+ 
+    echo "<tr>"; 
+ 
+    echo "<td>" . $row['Empid'] . "</td>"; 
+    echo "<td>" . $row['Ename'] . "</td>"; 
+    echo "<td>" . $row['Deptcode'] . "</td>"; 
+    echo "<td>" . $row['JoiningDate'] . "</td>"; 
+    echo "<td>" . $row['Gender'] . "</td>"; 
+ 
+    echo "</tr>"; 
+ 
+    echo "</table>"; 
+ 
+} else { 
+ 
+    // Insert new record 
+    $sql = "INSERT INTO employee 
+            VALUES 
+            ('$empid','$ename','$deptcode', 
+             '$joiningdate','$gender')"; 
+ 
+    if (mysqli_query($conn, $sql)) { 
+ 
+        echo "<h3>New employee record inserted successfully.</h3>"; 
+ 
+    } else { 
+ 
+        echo "Error: " . mysqli_error($conn); 
+ 
+    } 
+ 
+} 
+ 
+mysqli_close($conn); 
+ 
+?> 
+ 
+
+=== PAGE 30 ===
+9(I) Separate Male and Female Tables 
+The question requires two separate tables—one for male employees and another for female 
+employees—with summary counts. 
+gender_tables.php 
+<?php 
+ 
+include "db.php"; 
+ 
+// Male employees 
+$male = mysqli_query( 
+    $conn, 
+    "SELECT * FROM employee WHERE Gender='M'" 
+); 
+ 
+echo "<h2>Male Employees</h2>"; 
+ 
+echo "<table border='1' cellpadding='10'>"; 
+ 
+echo "<tr> 
+        <th>Employee ID</th> 
+        <th>Name</th> 
+        <th>Department</th> 
+        <th>Joining Date</th> 
+        <th>Gender</th> 
+      </tr>"; 
+ 
+$maleCount = 0; 
+ 
+while ($row = mysqli_fetch_assoc($male)) { 
+ 
+    echo "<tr>"; 
+ 
+    echo "<td>" . $row['Empid'] . "</td>"; 
+    echo "<td>" . $row['Ename'] . "</td>"; 
+    echo "<td>" . $row['Deptcode'] . "</td>"; 
+    echo "<td>" . $row['JoiningDate'] . "</td>"; 
+    echo "<td>" . $row['Gender'] . "</td>"; 
+ 
+    echo "</tr>"; 
+ 
+    $maleCount++; 
+} 
+ 
+echo "</table>"; 
+ 
+echo "<h3>Total Male Employees: " . 
+     $maleCount . "</h3>"; 
+ 
+ 
+// Female employees 
+$female = mysqli_query( 
+
+=== PAGE 31 ===
+    $conn, 
+    "SELECT * FROM employee WHERE Gender='F'" 
+); 
+ 
+echo "<h2>Female Employees</h2>"; 
+ 
+echo "<table border='1' cellpadding='10'>"; 
+ 
+echo "<tr> 
+        <th>Employee ID</th> 
+        <th>Name</th> 
+        <th>Department</th> 
+        <th>Joining Date</th> 
+        <th>Gender</th> 
+      </tr>"; 
+ 
+$femaleCount = 0; 
+ 
+while ($row = mysqli_fetch_assoc($female)) { 
+ 
+    echo "<tr>"; 
+ 
+    echo "<td>" . $row['Empid'] . "</td>"; 
+    echo "<td>" . $row['Ename'] . "</td>"; 
+    echo "<td>" . $row['Deptcode'] . "</td>"; 
+    echo "<td>" . $row['JoiningDate'] . "</td>"; 
+    echo "<td>" . $row['Gender'] . "</td>"; 
+ 
+    echo "</tr>"; 
+ 
+    $femaleCount++; 
+} 
+ 
+echo "</table>"; 
+ 
+echo "<h3>Total Female Employees: " . 
+     $femaleCount . "</h3>"; 
+ 
+ 
+// Summary 
+echo "<h2>Summary</h2>"; 
+ 
+echo "Male Employees: " . $maleCount . "<br>"; 
+echo "Female Employees: " . $femaleCount . "<br>"; 
+echo "Total Employees: " . 
+     ($maleCount + $femaleCount); 
+ 
+mysqli_close($conn); 
+ 
+?> 
+ 
+ 
+ 
+
+=== PAGE 32 ===
+9(J) Fetch Employee into Form and Update 
+The question requires entering employee ID, fetching the employee record into an HTML form, 
+allowing changes except Employee ID, and updating the database. 
+edit.html 
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Edit Employee</title> 
+</head> 
+<body> 
+ 
+<h2>Search Employee</h2> 
+ 
+<form method="post" action="edit.php"> 
+ 
+    Employee ID: 
+    <input type="text" name="empid" required> 
+ 
+    <br><br> 
+ 
+    <input type="submit" value="Search"> 
+ 
+</form> 
+ 
+</body> 
+</html> 
+edit.php 
+<?php 
+ 
+include "db.php"; 
+ 
+$empid = $_POST['empid']; 
+ 
+$sql = "SELECT * FROM employee 
+        WHERE Empid='$empid'"; 
+ 
+$result = mysqli_query($conn, $sql); 
+ 
+if (mysqli_num_rows($result) > 0) { 
+ 
+    $row = mysqli_fetch_assoc($result); 
+ 
+?> 
+ 
+<h2>Edit Employee Details</h2> 
+ 
+<form method="post" action="save.php"> 
+ 
+    Employee ID: 
+
+=== PAGE 33 ===
+ 
+    <input type="text" 
+           name="empid" 
+           value="<?php echo $row['Empid']; ?>" 
+           readonly> 
+ 
+    <br><br> 
+ 
+    Employee Name: 
+ 
+    <input type="text" 
+           name="ename" 
+           value="<?php echo $row['Ename']; ?>"> 
+ 
+    <br><br> 
+ 
+    Department: 
+ 
+    <input type="radio" 
+           name="deptcode" 
+           value="A" 
+           <?php if ($row['Deptcode'] == 'A') echo "checked"; ?>> 
+    Admin 
+ 
+    <input type="radio" 
+           name="deptcode" 
+           value="S" 
+           <?php if ($row['Deptcode'] == 'S') echo "checked"; ?>> 
+    Sales 
+ 
+    <input type="radio" 
+           name="deptcode" 
+           value="F" 
+           <?php if ($row['Deptcode'] == 'F') echo "checked"; ?>> 
+    Finance 
+ 
+    <br><br> 
+ 
+    Joining Date: 
+ 
+    <input type="date" 
+           name="joiningdate" 
+           value="<?php echo $row['JoiningDate']; ?>"> 
+ 
+    <br><br> 
+ 
+    Gender: 
+ 
+    <select name="gender"> 
+ 
+        <option value="M" 
+        <?php if ($row['Gender'] == 'M') echo "selected"; ?>> 
+        Male 
+        </option> 
+ 
+        <option value="F" 
+        <?php if ($row['Gender'] == 'F') echo "selected"; ?>> 
+
+=== PAGE 34 ===
+        Female 
+        </option> 
+ 
+    </select> 
+ 
+    <br><br> 
+ 
+    <input type="submit" value="Update"> 
+ 
+</form> 
+ 
+<?php 
+ 
+} else { 
+ 
+    echo "<h3>Employee record not found.</h3>"; 
+ 
+} 
+ 
+mysqli_close($conn); 
+ 
+?> 
+save.php 
+<?php 
+ 
+include "db.php"; 
+ 
+$empid = $_POST['empid']; 
+$ename = $_POST['ename']; 
+$deptcode = $_POST['deptcode']; 
+$joiningdate = $_POST['joiningdate']; 
+$gender = $_POST['gender']; 
+ 
+$sql = "UPDATE employee SET 
+ 
+        Ename='$ename', 
+        Deptcode='$deptcode', 
+        JoiningDate='$joiningdate', 
+        Gender='$gender' 
+ 
+        WHERE Empid='$empid'"; 
+ 
+if (mysqli_query($conn, $sql)) { 
+ 
+    echo "<h3>Employee record updated successfully.</h3>"; 
+ 
+} else { 
+ 
+    echo "Error: " . mysqli_error($conn); 
+ 
+} 
+ 
+mysqli_close($conn); 
+ 
+
+=== PAGE 35 ===
+?> 
+ 
+9(K) Fetch Employee and Delete 
+The journal requires entering Employee ID, displaying the employee record, providing a Delete 
+button, and deleting the record when the button is clicked. 
+delete.html 
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Delete Employee</title> 
+</head> 
+<body> 
+ 
+<h2>Delete Employee</h2> 
+ 
+<form method="post" action="delete.php"> 
+ 
+    Employee ID: 
+    <input type="text" name="empid" required> 
+ 
+    <br><br> 
+ 
+    <input type="submit" value="Search"> 
+ 
+</form> 
+ 
+</body> 
+</html> 
+delete.php 
+<?php 
+ 
+include "db.php"; 
+ 
+$empid = $_POST['empid']; 
+ 
+$sql = "SELECT * FROM employee 
+        WHERE Empid='$empid'"; 
+ 
+$result = mysqli_query($conn, $sql); 
+ 
+if (mysqli_num_rows($result) > 0) { 
+ 
+    $row = mysqli_fetch_assoc($result); 
+ 
+    echo "<h2>Employee Details</h2>"; 
+ 
+    echo "<table border='1' cellpadding='10'>"; 
+
+=== PAGE 36 ===
+ 
+    echo "<tr>"; 
+    echo "<th>Employee ID</th>"; 
+    echo "<th>Name</th>"; 
+    echo "<th>Department</th>"; 
+    echo "<th>Joining Date</th>"; 
+    echo "<th>Gender</th>"; 
+    echo "</tr>"; 
+ 
+    echo "<tr>"; 
+ 
+    echo "<td>" . $row['Empid'] . "</td>"; 
+    echo "<td>" . $row['Ename'] . "</td>"; 
+    echo "<td>" . $row['Deptcode'] . "</td>"; 
+    echo "<td>" . $row['JoiningDate'] . "</td>"; 
+    echo "<td>" . $row['Gender'] . "</td>"; 
+ 
+    echo "</tr>"; 
+ 
+    echo "</table>"; 
+ 
+    echo "<br>"; 
+ 
+    echo "<form method='post' action='confirm_delete.php'>"; 
+ 
+    echo "<input type='hidden' 
+                 name='empid' 
+                 value='" . $row['Empid'] . "'>"; 
+ 
+    echo "<input type='submit' 
+                 value='Delete Employee'>"; 
+ 
+    echo "</form>"; 
+ 
+} else { 
+ 
+    echo "<h3>Employee record not found.</h3>"; 
+ 
+} 
+ 
+mysqli_close($conn); 
+ 
+?> 
+confirm_delete.php 
+<?php 
+ 
+include "db.php"; 
+ 
+$empid = $_POST['empid']; 
+ 
+$sql = "DELETE FROM employee 
+        WHERE Empid='$empid'"; 
+ 
+if (mysqli_query($conn, $sql)) { 
+
+=== PAGE 37 ===
+ 
+    echo "<h2>Employee record deleted successfully.</h2>"; 
+ 
+} else { 
+ 
+    echo "Error: " . mysqli_error($conn); 
+ 
+} 
+ 
+mysqli_close($conn); 
+ 
+?> 
+ 
+Recommended Folder Structure 
+For easy practical execution in XAMPP, arrange the files like this: 
+C:\xampp\htdocs\ 
+│ 
+├── program1\ 
+│   ├── index.html 
+│   └── temperature.php 
+│ 
+├── program2\ 
+│   ├── index.html 
+│   └── birthdate.php 
+│ 
+├── program3\ 
+│   ├── index.html 
+│   └── college.php 
+│ 
+├── program4\ 
+│   ├── index.html 
+│   ├── first.php 
+│   └── second.php 
+│ 
+├── program5\ 
+│   ├── index.html 
+│   ├── first.php 
+│   └── second.php 
+│ 
+├── program6\ 
+│   ├── index.html 
+│   ├── first.php 
+│   └── log.txt 
+│ 
+├── program7\ 
+│   ├── index.html 
+│   └── upload.php 
+│ 
+├── program8\ 
+│   └── student.php 
+│ 
+
+=== PAGE 38 ===
+├── program9\ 
+│   ├── db.php 
+│   ├── insert.html 
+│   ├── insert.php 
+│   ├── check.html 
+│   ├── check.php 
+│   ├── update.html 
+│   ├── update.php 
+│   ├── firstrecord.php 
+│   ├── firsttable.php 
+│   ├── gender.html 
+│   ├── gender.php 
+│   ├── insert_highlight.html 
+│   ├── insert_highlight.php 
+│   ├── insert_or_display.html 
+│   ├── insert_or_display.php 
+│   ├── gender_tables.php 
+│   ├── edit.html 
+│   ├── edit.php 
+│   ├── save.php 
+│   ├── delete.html 
+│   ├── delete.php 
+│   └── confirm_delete.php 
+│ 
+└── images\ 
+How to Run 
+Start Apache and MySQL in XAMPP. 
+Then open: 
+http://localhost/program1/index.html 
+For example, Program 9: 
+http://localhost/program9/insert.html 
+For database programs, first create the LYBCA database and employee table given above. 
+ 

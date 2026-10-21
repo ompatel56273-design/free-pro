@@ -1,0 +1,85 @@
+<main class="page-container genai-page">
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="header-inner">
+      <h1 class="page-title">
+        GenAI Practical Solutions
+      </h1>
+      <p class="page-subtitle">
+        Generative AI (US07MABCA01) Lab Practical Programs
+      </p>
+
+      <!-- Action & Search Toolbar -->
+      <div class="toolbar-row">
+        <!-- Search Bar -->
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="search-icon" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" 
+                 class="search-input" 
+                 [(ngModel)]="searchTerm"
+                 placeholder="Search by program number, definition, or code..."
+                 aria-label="Search GenAI programs">
+          <button *ngIf="searchTerm" 
+                  type="button"
+                  class="search-clear-btn" 
+                  (click)="clearSearch()"
+                  aria-label="Clear search">
+            &times;
+          </button>
+        </div>
+
+        <!-- Copy All GenAI Code Button -->
+        <button type="button" 
+                class="btn-copy-all" 
+                [ngClass]="copyAllStatus"
+                (click)="copyAllGenaiCode()"
+                aria-label="Copy All GenAI Code">
+          <svg *ngIf="copyAllStatus === 'idle'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon">
+            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+          </svg>
+          <svg *ngIf="copyAllStatus === 'copying'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon spinner">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 2a10 10 0 0 1 10 10"></path>
+          </svg>
+          <svg *ngIf="copyAllStatus === 'copied'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="btn-icon">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span class="btn-text">
+            <ng-container [ngSwitch]="copyAllStatus">
+              <span *ngSwitchCase="'copying'">Copying...</span>
+              <span *ngSwitchCase="'copied'">All GenAI Code Copied!</span>
+              <span *ngSwitchCase="'error'">Copy Failed</span>
+              <span *ngSwitchDefault>Copy All GenAI Code</span>
+            </ng-container>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Programs List Section -->
+  <section class="programs-section" aria-label="GenAI Practical Programs">
+    <!-- Search result summary if active search -->
+    <div class="search-status-bar" *ngIf="searchTerm">
+      <span>Found <strong>{{ filteredPrograms.length }}</strong> of <strong>{{ totalPrograms }}</strong> programs matching "<em>{{ searchTerm }}</em>"</span>
+      <button type="button" class="btn-reset" (click)="clearSearch()">Clear Search</button>
+    </div>
+
+    <!-- Programs Grid / Stack -->
+    <div class="programs-container" *ngIf="filteredPrograms.length > 0">
+      <app-program-card *ngFor="let prog of filteredPrograms" 
+                        [program]="prog">
+      </app-program-card>
+    </div>
+
+    <!-- Empty Search State -->
+    <div *ngIf="filteredPrograms.length === 0" class="empty-state">
+      <p class="empty-text">No GenAI programs match your search "<strong>{{ searchTerm }}</strong>".</p>
+      <button type="button" class="btn-clear-search" (click)="clearSearch()">Show All Programs</button>
+    </div>
+  </section>
+</main>
