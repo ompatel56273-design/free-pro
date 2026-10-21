@@ -1,0 +1,9 @@
+{
+  "outputDirectory": "dist/code-shelf/browser",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
